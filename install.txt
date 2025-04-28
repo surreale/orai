@@ -1,0 +1,133 @@
+Backend:
+---------------------
+    npx express-generator --no-view ***
+    cd ***
+    npm intsall
+    npm intsall nodemon mysql2 cors
+    npm audit fix --force
+
+    bin mappa www 8080-ra átállítani
+    package.json start: node -> nodemon
+	
+    const cors = require('cors')
+
+var app = express();
+
+var corsOptions = {
+    origin: "http://localhost:3000"
+}
+app.use(cors(corsOptions))
+
+
+adatok.js létrehozása a routes-ban
+const adatokRouter = require('./routes/adatok');
+app.use('/adatok', adatokRouter);
+
+db mappa létrehozása
+dboperations.js
+
+//összes termék
+
+async function selectTermek() {
+   try{ 
+    const [rows] = await pool.query('select * from termek');
+    return rows;
+   }
+   catch(error){
+    throw error;
+   } 
+}
+
+    npm start
+
+Frontend:
+---------------------
+    npx create-react-app ***
+    cd ***
+    npm intsall react-router-dom bootsrap
+    npm start
+
+
+
+
+
+
+
+
+
+waitForConnections: true,
+    connectionLimit: 10,
+    queueLimit: 0,
+    port: 3306,
+    dateStrings: true
+
+
+
+
+
+
+
+
+
+const config = require('./dbconfig')
+const sql = require('mysql2/promise')
+
+let pool = sql.createPool(config)
+
+async function selectTermek(){
+    try{
+        const [rows] = await pool.query('select * from autok')
+        return rows
+    }
+    catch(error){
+        throw error
+    }
+}
+
+module.exports = {
+    selectTermek
+}
+
+
+var express = require('express');
+var router = express.Router();
+var Db = require('../db/dboperations')
+
+/* GET home page. */
+router.get('/', async function(req, res, next) {
+  try{
+    const autok = await Db.selectTermek()
+    res.json(autok)
+  }
+  catch(error)
+  {
+    res.status(500).send('Szerver hiba!')
+  }
+});
+
+module.exports = router;
+
+
+
+
+
+
+
+var express = require('express');
+var router = express.Router();
+var Db = require('../db/dboperations')
+
+/* GET home page. */
+router.get('/', async function(req, res, next) {
+  try{
+    const autok = await Db.selectTermek()
+    res.json(autok)
+  }
+  catch(error)
+  {
+    res.status(500).send('Szerver hiba!')
+  }
+});
+
+module.exports = router;
+
